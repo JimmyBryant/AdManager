@@ -1,0 +1,343 @@
+             <!-- widgetName -->
+             <div class="control-group">
+                  <label class="control-label" for="widgetName">  插件名称</label>
+                  <div class="controls">
+                   <input id="widgetName" name="widgetName" type="text" required class="required" value="<%=widget.widgetName%>">
+                   </input>
+                   <span class="text-warning">*</span>
+                  </div>
+             </div>
+              <!-- adType  -->
+             <div class="control-group">
+                  <label class="control-label" for="adType">  广告类型</label>
+                  <div class="controls">
+                    <select id="adType" name="adType" >
+                        <% var wt = {"adsense" : "Adsense","afv" : "AFV","dfp" : "DFP",banner : 'Banner',baidu:'Baidu'};
+                        for(var p in wt){
+                          if(p == 'banner' && widget.widgetType != 2){
+                            continue;
+                          }
+                          if(p == 'afv'&&widget.widgetType == 3){
+                            continue;
+                          }
+                        %>
+                        <option value="<%=p%>" <%if(widget.adType == p){%> selected <%}%>><%=wt[p]%></option>
+                        <%}%>
+                    </select>
+                    <span class="text-warning">*</span>
+                  </div>
+             </div>
+             
+             <!-- Banner -->
+             <%if(widget.widgetType == 2){%>
+             <div style="display:none;" class="gad-input ad-banner">
+              <div class="control-group">
+                    <label class="control-label" for="dfpName"> 广告位尺寸</label>
+                    <div class="controls">
+                         <div class="input-append input-prepend">
+                           <span class="add-on">宽</span>
+                           <input type="text" id="width" name="width" required class="input-small required" placeholder="必须正整数" value="<%=widget.width%>">                          
+                            </input>
+                            <span class="add-on">px</span>
+                          </div>
+                          <div class="input-append input-prepend">
+                           <span class="add-on">高</span>
+                           <input type="text" id="height" name="height" required class="input-small required" placeholder="必须正整数" value="<%=widget.height%>">                          
+                            </input>
+                            <span class="add-on">px</span>
+                          </div>
+                          <span class="text-warning">*</span>
+                    </div>
+                    <div>
+
+                    </div>
+               </div>
+             </div>
+             <%}%>
+             <!-- adSize -->
+             <div class="control-group" id="gsize">
+                  <label class="control-label" for="adSize">  广告尺寸</label>
+                  <div class="controls">
+                    <select id="adSize" name="adSize" >
+                        <%var adsize = widget.widgetType==1?['300x250','336x280']:widget.widgetType==2?['300x250','336x280','728x90','160x600','120x600','120x240','320x50',
+                                        '970x90','468x60','234x60','300x600','250x250','200x200','125x125','728x15',
+                                        '468x15','200x90','180x90','160x90','120x90']:['120x240','100x300','120x600'];
+                          var notCustom = adsize.some(function(val){
+                                  if(val==widget.width+'x'+widget.height){
+                                    return true;
+                                  }
+                          });
+                          for(var i=0,len=adsize.length;i<len;i++){
+                                             
+                        %>
+                        <option value="<%=adsize[i]%>" <%if(adsize[i] == (widget.width+'x'+widget.height)){%>selected <%}%>><%=adsize[i]%></option>
+                        <%}%>
+                        <%if(!notCustom){%>
+                          <option value="<%=widget.width+'x'+widget.height%>" selected><%=widget.width+'x'+widget.height%></option>
+                        <%}%>
+                    </select>
+                    <span class="text-warning">*</span>
+                    <%if(widget.widgetType == 2){%>
+                    <div id="custom-adSize" style="display:none;">
+                      <div class="input-append">
+                        <input class="span2" type="text">
+                        <button class="btn ok" type="button">确定</button>
+                        <button class="btn cancel" type="button">取消</button>
+                      </div>
+                    </div>
+                    <input type="button" class="btn-custom-adSize btn btn-small btn-info" value="自定义"></input> 
+                    <%}%>                      
+                </div>
+             </div>
+             <%if(widget.widgetType != 3){%>
+               <!-- adsense and afv-->
+               <div id="ad-adsense" class="gad-input">
+                 <div class="control-group">
+                      <label class="control-label" for="pubID">PubID</label>
+                      <div class="controls">
+                          <input id="pubID" name="pubID" type="text" required class="required" placeholder="例如:pub-123412345" value="<%=widget.pubID||''%>"></input>
+                          <span class="text-warning">*</span>
+                      </div>
+                 </div>
+                 <div class="control-group">
+                      <label class="control-label" for="slot"> Google Slot</label>
+                      <div class="controls">
+                          <input id="slot" name="slot" type="text" required class="required" value="<%=widget.slot||''%>"></input>
+                          <span class="text-warning">*</span>
+                      </div>
+                 </div>
+               </div>
+              <!-- DFP -->
+              <div id="ad-dfp" style="display:none;" class="gad-input">
+                <div class="control-group">
+                  <label class="control-label" for="dfpID"> DFP ID</label>
+                  <div class="controls">
+                      <input id="dfpID" name="dfpID" type="text" value="<%=widget.dfpID||''%>"></input>
+                  </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="dfpName"> DFP Name</label>
+                    <div class="controls">
+                        <input id="dfpName" name="dfpName" type="text" value="<%=widget.dfpName||''%>"></input>
+                    </div>
+                </div>
+              </div>
+             <%}%>
+             <% if(widget.widgetType ==2 ){%>
+             <div style="display:none;" class="gad-input ad-banner">
+                <!--  Banners-->
+                <div class="banners clearfix">
+                    <div class="banner">
+                    
+                          <div class="control-group">
+                                <label class="control-label" for="adSize1">  广告尺寸1</label>
+                                <div class="controls">
+                                  <select id="adSize1" name="adSize1" >
+                                 <%
+                                  for(var i=0,len=adsize.length;i<len;i++){                                     
+                                %>
+                                  <option value="<%=adsize[i]%>" <%if(widget.w1+'x'+widget.h1 == adsize[i]){%> selected <%}%> ><%=adsize[i]%></option>
+                                  <%}%>                    
+                                  </select>                    
+                                </div>
+                           </div>
+
+                           <div class="control-group">
+                                <label class="control-label" for="pubID1"> Google PubID1</label>
+                                <div class="controls">
+                                    <input id="pubID1" name="pubID1" type="text"  placeholder="例如:pub-123412345" value="<%=widget.pubID1||''%>" validate="no"></input>                                    
+                                </div>
+                           </div>
+
+                          <div class="control-group">
+                                <label class="control-label" for="slot1"> Google Slot1</label>
+                                <div class="controls">
+                                <input id="slot1" name="slot1" type="text" value="<%=widget.slot1||''%>" validate="no"></input>                          
+                                </div>
+                           </div>
+
+                      </div>
+                      <div class="banner">
+                           <div class="control-group">
+                                <label class="control-label" for="adSize2">  广告尺寸2</label>
+                                <div class="controls">
+                                  <select id="adSize2" name="adSize2" >
+                                 <%for(var i=0,len=adsize.length;i<len;i++){ %>                                                                  
+                                    <option value="<%=adsize[i]%>" <%if(widget.w2+'x'+widget.h2 == adsize[i]){%> selected <%}%>><%=adsize[i]%></option>
+                                  <%}%>                    
+                                  </select>                    
+                                </div>
+                           </div>
+
+                          <div class="control-group">
+                                <label class="control-label" for="pubID2"> Google PubID2</label>
+                                <div class="controls">
+                                    <input id="pubID2" name="pubID2" type="text"  placeholder="例如:pub-123412345" value="<%=widget.pubID2||''%>" validate="no"></input>                                    
+                                </div>
+                           </div>
+
+                          <div class="control-group">
+                                <label class="control-label" for="slot2"> Google Slot2</label>
+                                <div class="controls">
+                                    <input id="slot2" name="slot2" type="text" value="<%=widget.slot2||''%>" validate="no"></input>                              
+                                </div>
+                           </div>
+                      </div>
+                  </div>
+             </div>
+             <% }%>
+
+            <%if(widget.widgetType == 3){%>
+              <div class="gad-input ad-couplet">           
+                <!-- Couplet Banners -->
+                <div class="banners clearfix">
+                    <div class="banner">
+                       <div class="control-group">
+                          <label class="control-label" for="pubID1">Left PubID</label>
+                          <div class="controls">
+                              <input id="pubID1" name="pubID1" type="text" validate="no" value="<%=widget.pubID1%>"  placeholder="例如:ca-pub-123412345"></input>                                    
+                          </div>
+                       </div>
+
+                       <div class="control-group slot">
+                          <label class="control-label" for="slot1">Left Slot</label>
+                          <div class="controls">
+                              <input id="slot1" name="slot1" type="text" value="<%=widget.slot1%>"></input>                                    
+                          </div>
+                       </div>
+
+                      </div>
+                      <div class="banner">
+
+                        <div class="control-group">
+                          <label class="control-label" for="pubID2">Right PubID</label>
+                          <div class="controls">
+                              <input id="pubID2" name="pubID2" type="text"  placeholder="例如:ca-pub-123412345" value="<%=widget.pubID2%>"></input>                                    
+                          </div>
+                         </div>
+
+                        <div class="control-group  slot">
+                          <label class="control-label" for="slot2">Right Slot</label>
+                          <div class="controls">
+                              <input id="slot2" name="slot2" type="text" value="<%=widget.slot2%>"></input>                                    
+                          </div>
+                         </div>
+
+                      </div>
+                  </div>
+                
+             </div>
+
+             <%}%>
+
+              <!-- isAlive-->
+              <div class="control-group">
+                    <label class="control-label" for="isAlive"> 激活插件</label>
+                    <div class="controls">
+                        <select id="isAlive" name="isAlive"  >
+                          <option value="1">是</option>
+                          <option value="0" <%if(widget.isAlive==false){%>selected<%}%>>否</option>
+                        </select>
+                    </div>
+              </div>
+
+             <div id="ad-setting">
+               <div class="control-group">
+                  <div class="controls">
+                    <a href="javascript:;" class="setting">
+                      更多设置↓
+                    </a>
+                    <a href="javascript:;" class="setting" style="display:none;">
+                      更多设置↑
+                    </a>
+                  </div>
+               </div>
+                <div class="setting-box">
+                  <%if(widget.widgetType!=2){%>
+                    <div class="control-group">
+                      <label class="control-label" for="closePosition">关闭按钮位置</label>
+                      <div class="controls">
+                        <select id="closePosition" name="closePosition">
+                          <%var close={tr:'右上角',tl:'左上角',br:'右下角',bl:'左下角'}
+                          for(var c in close){
+                          %>
+                          <option value="<%=c%>" <%if(widget.closePosition==c){%> selected <%}%>><%=close[c]%></option>
+                          <%}%>
+                        </select>
+                      </div>
+                    </div>
+                  <%}%>  
+                  <%if(widget.widgetType==1){%>
+                    <div class="control-group">
+                      <label class="control-label" for="showLogo">显示尚街标识</label>
+                      <div class="controls">
+                        <select id="showLogo" name="showLogo">
+                          <option value="1">是</option>
+                          <option value="0" <%if(widget.showLogo==false){%> selected<%}%>>否</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="showReplay">显示重新播放</label>
+                      <div class="controls">
+                        <select id="showReplay" name="showReplay">
+                          <option value="1">是</option>
+                          <option value="0" <%if(widget.showReplay==false){%> selected<%}%>>否</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="closeReplay">重新播放可关闭</label>
+                      <div class="controls">
+                        <select id="closeReplay" name="closeReplay">
+                          <option value="0">否</option>
+                          <option value="1" <%if(widget.closeReplay==true){%> selected<%}%>>是</option>                        
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                          <label class="control-label" for="minitime">定时最小化</label>
+                          <div class="controls">
+                          <div class="input-append">
+                           <input type="text" id="minitime" name="minitime" class="input-small" placeholder="必须是正整数" value="<%=widget.minitime?widget.minitime:''%>">                          
+                            </input>
+                            <span class="add-on">秒</span>
+                          </div>
+                      </div>
+                    </div>                    
+
+                    <%}else if(widget.widgetType==2){%>
+                    <div class="control-group">
+                      <label class="control-label" for="showClose">显示关闭按钮</label>
+                      <div class="controls">
+                        <select id="showClose" name="showClose">
+                          <option value="1">是</option>
+                          <option value="0" <%if(!widget.showClose){%>selected<%}%>>否</option>
+                        </select>
+                      </div>
+                    </div>
+                    <%}%>
+
+                    <div class="control-group">
+                          <label class="control-label" for="adClickProb">点击概率</label>
+                          <div class="controls">
+                          <div class="input-append">
+                           <input type="text" id="adClickProb" name="adClickProb" class="input-small" placeholder="值为0~100间的数字" value="<%=widget.adClickProb?widget.adClickProb*100:0%>">                          
+                            </input>
+                            <span class="add-on">%</span>
+                          </div>
+                      </div>
+                    </div>
+                    
+                    <div class="control-group">
+                      <label class="control-label" for="trackUrl">CNZZ监控</label>
+                      <div class="controls">
+                        <input type="text" id="trackUrl" name="trackUrl" placeholder="CNZZ监控地址" value="<%=widget.trackUrl%>"></input>
+                      </div>
+                    </div>
+                    
+                  </div>
+               </div>

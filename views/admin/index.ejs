@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Admin-所有用户</title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+          <div class="main-left">
+            <%=include ../left%>
+          </div>
+          <div class="main-right">
+            <div class="action-group">
+              <a class="btn btn-primary" href="/admin/addUser">add user</a>
+            </div>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <td>编号</td><td>Email</td><td>创建日期 </td><td>管理员</td>
+                </tr>
+              </thead>          
+              <%var i=1;for(var item in userList){
+                var profile=JSON.parse(userList[item]);
+              %>
+                <tr>
+                  <td><%=i%></td>
+                  <td><%=item%></td>
+                  <td><%=new Date(profile.timestamp).toLocaleDateString()%> <%= new Date(profile.timestamp).toLocaleTimeString()%></td>
+                  <td><%=profile.isAdmin?'YES':'No'%></td>
+                </tr>
+
+              <% i++; }%>        
+            </table>
+          </div>
+      </div>
+      <%include ../script%>
+      <%include ../footer%>
+ </body>
+ </html>

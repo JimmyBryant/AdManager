@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>修改插件--Instreet</title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+        <div class="container">
+          <form method="post" action="/widget/edit" id="widget-data-form"  class="form-horizontal required-form">
+            <%if(widget){%>
+             <!-- alert message -->
+             <%if(typeof log!='undefined'){%>
+             <div class="alert alert-<%=log.type%>" style="display:block;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong><%=log.type&&log.type.toUpperCase()%>:</strong><span class="mes"><%=log.message%></span>
+             </div>
+             <%}%>
+              <input type="hidden" name="field" value="<%=widget.field%>"></input> 
+              <input type="hidden" name="siteField" value="<%=widget.siteField%>"></input>       
+              <input type="hidden" name="widgetType" value="<%=widget.widgetType%>"></input>                                     
+              <div class="widget-top-info">
+                <h4>
+                  <span>网站:</span><a href="/site/details?field=<%=widget.siteField%>"><%=widget.siteName%></a> 
+                </h4>   
+              </div>
+              
+              <div class="control-group">
+                  <label class="control-label">  插件类型</label>
+                  <div class="controls">
+                    <strong><%=widget.widgetType==1?'弹窗广告':widget.widgetType==2?'固定位广告':'对联广告'%></strong>                                        
+                  </div>
+              </div>
+              <% include edit_ad %>
+              <div class="control-group">
+                <div class="controls">
+                  <input type="submit" class="btn btn-success" value="修改插件"></input>
+                </div>
+              </div>
+              <%}%>
+          </form>
+        </div>
+      </div>
+      <%include ../script%>      
+      <script type="text/javascript" >        
+        seajs.use(['/js/validate','/js/main'],function  (validate,main) {          
+          var easyform = validate.validateWidget();
+          main.bindAdEvents(easyform);
+        });
+      </script>      
+      <%include ../footer%>
+ </body>
+ </html>

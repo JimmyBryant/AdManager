@@ -1,0 +1,28 @@
+#! /bin/sh
+APP_PATH=/istc/istc/istc
+APP=$APP_PATH/cluster.js
+APP_NAME=ISTC
+LOGFILE=/dev/null
+LOGPATH=$APP_PATH/log
+PID=$APP_PATH/script/forever.pid
+FE=$APP_PATH/node_modules/forever/bin/forever
+
+case "$1" in
+        "start")
+                echo "Starting1 $APP_NAME: "
+		$FE -p $APP_PATH -l $LOGFILE -e $LOGFILE -o $LOGFILE -a --pidFile $PID start $APP
+                ;;
+        "stop")
+                echo "Stopping $APPA_NAME: "
+		$FE  stop $APP 
+                ;;
+	"restart")
+                echo "Restarting $APP_NAME: "
+                $FE -p $APP_PATH -l $LOGFILE -e $LOGFILE -o $LOGFILE -a  --pidFile $PID restart $APP                                                                 	             
+		;;
+	"clean")
+                echo "Cleanuping $APP_NAME: "
+                rm -rf $LOGPATH/*.log
+                ;;	
+esac
+exit 0

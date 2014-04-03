@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>	
+	<% include ../head%>	
+</head>
+<body>
+	<% include ../header%>
+	<div id="container">
+		<div class="container">
+			<div class="site-search-box" style="text-align:center;">
+				<form action="/site/search">
+				<div class="input-append">
+				  	<input class="span8" id="appendedInputButton" name="keywords" type="text" value="<%=keywords||''%>">
+				  	<button class="btn" type="submit">搜索网站</button>
+				</div>
+				</form>
+			</div>
+			
+			<h5>搜索结果:</h5>
+			<table class="table">
+			<%for(var i=0,len=result.length;i<len;i++){
+			var site = JSON.parse(result[i]);%>
+			<tr>
+				<td><a href="/site/details?field=<%=site.field%>"><img src="<%=site.logoUrl%>" class="site-logo"/></a></td>
+				<td><a href="/site/details?field=<%=site.field%>"><%=site.siteName%></a></td>
+			</tr>
+			<%}%>
+			</table>
+			<% include ../page%>
+		</div>
+	</div>
+
+	<% include ../script %>	
+	<% include ../footer %>
+</body>
+</html>
+
+

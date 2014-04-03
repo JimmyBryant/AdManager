@@ -1,0 +1,40 @@
+
+var host="http://istc.instreet.cn",
+insHost = 'http://www.instreet.cn',
+cssUrl=host+"/css/",
+jsUrl=host+"/js/",
+imageUrl=host+"/images/",
+deliverlog='/var/instreet/cluster/istc/logs',
+istclog='/var/instreet/cluster/istc/logs/istclog',
+oosUrl = insHost + '/istc.json',
+version = 'istc-0.3';
+
+var config={
+	host:host,
+	insHost : insHost,
+	cssUrl:cssUrl,
+	jsUrl:jsUrl,
+	imageUrl:imageUrl,
+	popupUrl:jsUrl + 'instreet.popup.min.js',	
+	permanentUrl : jsUrl + 'instreet.permanent.min.js',
+	coupletUrl : jsUrl + 'instreet.couplet.min.js',
+	deliverlog:deliverlog,
+	istclog:istclog,
+	version:version,
+	sessionSecret:'inspopup',
+	maxAge:1000*60*60*24*7,
+	authCookieName:'instreet_user',
+	oosCookieName:'instreet_uid',
+	deliverCookieName:'istc_deliver',
+	admin:{
+		email:"admin@instreet.cn",
+		password:"EQ-[*IgXRG^2"
+	},
+	redis:{
+		host: '210.14.137.15',
+		port: 6380
+	},
+	oosUrl: oosUrl
+};
+
+module.exports=config;

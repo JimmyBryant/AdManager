@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>编辑网站信息--Instreet</title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+        <div class="container">
+          <form method="post" action="/site/edit" id="ad-form" class="form-horizontal required-form">
+             <!-- alert message -->
+             <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong></strong><span class="mes"></span>
+             </div>
+             <input type="hidden" id="siteField" name="siteField" value="<%=site.field%>"></input>
+             <input type="hidden" id="oSiteName" name="oSiteName" value="<%=site.siteName%>"></input>
+             <div class="control-group">
+                  <label class="control-label" for="siteName"> 网站名称</label>
+                  <div class="controls">
+                    <input id="siteName" name="siteName" type="text" required class="required" placeholder="网站名称" value='<%=site.siteName%>'></input>
+                  </div>
+             </div>
+              <div class="control-group">
+                    <label class="control-label" for="domain"> 网站域名</label>
+                    <div class="controls">
+                            <div class="input-prepend">
+                              <span class="add-on">Http://</span>
+                              <input type="text" id="domain" name="domain" readonly="readonly" placeholder="例如:www.instreet.cn" required class="required" value='<%=site.domain%>'>
+                            </div>
+                    </div>
+              </div>
+              <div class="control-group">
+                    <label class="control-label" for="logoUrl"> 网站Logo</label>
+                    <div class="controls">
+                       <input type="text" id="logoUrl" name="logoUrl" placeholder="例如:http://www.instreet.cn/logo.jpg" required class="required input-xlarge" value="<%=site.logoUrl%>">                              
+                    </div>
+              </div>
+             <div class="control-group">
+                  <label class="control-label" for="isAlive"> 是否激活</label>
+                  <div class="controls">
+                    <select id="isAlive" name="isAlive" class="input-small">
+                        <option value="1">是</option>
+                        <option value="0" <%if(site.isAlive==false){%> selected<%}%>>否</option>
+                    </select>
+                  </div>
+             </div>
+              <div class="control-group">
+                    <div class="controls">
+                    <input type="submit" class="btn btn-success btn-medium" value="修改网站"/>
+                    </div>
+              </div>
+          </form>
+        </div>
+      </div>
+      <%include ../script%>
+      <script type="text/javascript" >
+        seajs.use(['/js/validate'],function  (validate) {          
+          validate.validateSite('edit');
+        });
+      </script>
+      <%include ../footer%>
+ </body>
+ </html>

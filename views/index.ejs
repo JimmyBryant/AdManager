@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>	
+	<% include head%>	
+</head>
+<body>
+	<% include header%>
+	<div id="container">
+		<div class="container">
+			<div class="site-search-box">
+				<form action="/site/search">
+				<div class="input-append">
+				  	<input class="span4" id="appendedInputButton" name="keywords" type="text">
+				  	<button class="btn" type="submit">搜索网站</button>
+				</div>
+				</form>
+			</div>
+			<table class="table table-bordered table-striped">
+		              <thead>
+					<tr>
+					  <td>编号</td>
+					  <td>网站</td>
+					  <td>网站Logo</td>
+					  <td>创建日期 </td>
+					  <td>状态</td>
+					  <td>操作</td>
+					</tr>
+		              </thead> 
+		              <% var i=1,date = new Date();for(var n=0,len=siteList.length;n<len;n++){
+		              	var s=JSON.parse(siteList[n]);
+		              	date.setTime(s.timestamp);
+		              %>
+		              	<tr>
+		              		<td><%=(pager.curPage-1)*pager.pageSize+i%></td>
+		              		<td>
+		              			<div class="site-name">
+		              				<a href="/site/details?field=<%=s.field%>"><%=s.siteName%></a>
+		              			</div>
+		              			<span><%=s.domain%></span>
+		              		</td>
+		              		<td>
+		              			<a href="http://<%=s.domain%>" target="_blank">
+		              				<img class="site-logo" src="<%=s.logoUrl%>"/>
+		              			</a>
+		              		</td>
+	             			<td>
+	              				<%=date.getFullYear()%>-<%=date.getMonth()+1%>-<%=date.getDate()%>
+	              				<%=date.toLocaleTimeString()%>
+	              			</td>
+		              		<td>		              			
+		              		<%if(s.isAlive == true){%>
+		              		<span class="label label-success">已激活</span>
+		              		<%}else{%>
+		              		<span class="label">未激活</span>
+		              		<%}%>
+		              		</td>
+		              		<td>		              			
+		              			<%if(user.isAdmin){%>
+			              			<a href="/widget/create?siteField=<%=s.field%>&siteName=<%=s.siteName%>"  class="btn btn-info">创建插件</a>	
+			              			<%if(s.isAlive == true){%>	              			
+			              			<a field="<%=s.field%>"  href="javascript:;" class="site-stop btn btn-danger" >暂停</a>
+			              			<%}else{%>
+			              			<button field="<%=s.field%>"  type="button" class="site-active btn btn-danger" >激活</button>
+			              			<%}%>
+		              			<%}%>
+		              		</td>
+		              	</tr>
+		              <%i++;}%>
+			</table>
+			<% include page%>
+		</div>
+	</div>
+	<% include script %>	
+	<% include footer %>
+</body>
+</html>
+
+

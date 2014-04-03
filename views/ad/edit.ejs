@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>welcome,<%=user.email%></title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+        <div class="container">
+          <%if(deliver){%>
+          <form method="post" action="/ad/create" id="ad-form" class="form-horizontal required-form">
+             <h4 class="edit-form-top">
+              <input type="hidden" id="sid" name="sid" value="<%=deliver.sid%>">
+              <input type="hidden" id="siteName" name="siteName" value="<%=deliver.name%>">
+              <input type="hidden" id="domain" name="domain" value="<%=deliver.domain%>">
+                <span><%=deliver.name%></span>
+                <a href="http://<%=deliver.domain%>" target="_blank"><%=deliver.domain%></a>
+             </h4>
+             <!-- alert message -->
+             <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong></strong><span class="mes"></span>
+             </div>
+             <div class="control-group">
+                  <label class="control-label" for="adSize"> 广告尺寸</label>
+                  <div class="controls">
+                    <select id="adSize" name="adSize" >
+                       <%var size={"300_250":"300*250","336_280":"336*280"};
+                       for(var s in size){%>
+                        <option value="<%=s%>" <%if(deliver.width&&deliver.width+"_"+deliver.height==s) {%>selected<%}%>><%=size[s]%></option>
+                       <%}%>
+                    </select>
+                  </div>
+             </div>
+             <div class="control-group">
+                  <label class="control-label" for="adType">  广告类型</label>
+                  <div class="controls">
+                    <select id="adType" name="adType" >
+                       <%var type={"adsense":"Adsense","afv":"AFV","dfp":"DFP"};
+                       for(var t in type){%>
+                        <option value="<%=t%>" <%if(deliver.adType&&t==deliver.adType) {%>selected <%}%>><%=type[t]%></option>
+                       <%}%>
+                        <!-- <option value="custom">直客</option> -->
+                    </select>
+                  </div>
+             </div>
+             <!-- adsense and afv-->
+             <div id="ad-adsense">
+               <div class="control-group">
+                    <label class="control-label" for="pubID"> Google PubID</label>
+                    <div class="controls">
+                        <input id="pubID" name="pubID" type="text" required class="required" value="<%=deliver.pubID||''%>" placeholder="例如:pub-123412345"></input>
+                    </div>
+               </div>
+              <div class="control-group">
+                    <label class="control-label" for="slot"> Google Slot</label>
+                    <div class="controls">
+                        <input id="slot" name="slot" type="text" value="<%=deliver.slot||''%>" required class="required"></input>
+                    </div>
+               </div>
+             </div>
+             <!-- DFP -->
+              <div id="ad-dfp" style="display:none;">
+               <div class="control-group">
+                    <label class="control-label" for="dfpID"> DFP ID</label>
+                    <div class="controls">
+                        <input id="dfpID" name="dfpID" type="text" value="<%=deliver.dfpID%>"></input>
+                    </div>
+               </div>
+              <div class="control-group">
+                    <label class="control-label" for="dfpName"> DFP Name</label>
+                    <div class="controls">
+                        <input id="dfpName" name="dfpName" type="text" value="<%=deliver.dfpName%>"></input>
+                    </div>
+               </div>
+             </div>
+             <div id="ad-setting">
+               <div class="control-group">
+                  <div class="controls">
+                    <a href="javascript:;" class="setting">
+                      更多设置
+                    </a>
+                  </div>
+               </div>
+                <div class="setting-box">
+                    <div class="control-group">
+                      <label class="control-label" for="closePosition">关闭按钮位置</label>
+                      <div class="controls">
+                        <select id="closePosition" name="closePosition">
+                          <%var close={tl:'左上角',tr:'右上角',bl:'左下角',br:'右下角'}
+                          for(var c in close){
+                          %>
+                          <option value="<%=c%>" <%if(deliver.closePosition==c){%> selected <%}%>><%=close[c]%></option>
+                          <%}%>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="showLogo">显示尚街标识</label>
+                      <div class="controls">
+                        <select id="showLogo" name="showLogo">
+                          <option value="1">是</option>
+                          <option value="0" <%if(deliver.showLogo==false){%> selected<%}%>>否</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="showReplay">显示重新播放</label>
+                      <div class="controls">
+                        <select id="showReplay" name="showReplay">
+                          <option value="1">是</option>
+                          <option value="0" <%if(deliver.showReplay==false){%> selected<%}%>>否</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="closeReplay">重新播放可关闭</label>
+                      <div class="controls">
+                        <select id="closeReplay" name="closeReplay">
+                          <option value="0">否</option>
+                          <option value="1" <%if(deliver.closeReplay==true){%> selected<%}%>>是</option>                          
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                          <label class="control-label" for="minitime">定时最小化</label>
+                          <div class="controls">
+                          <div class="input-append">
+                           <input type="text" id="minitime" name="minitime" class="input-mini" placeholder="必须是正整数" value="<%=deliver.minitime?deliver.minitime:''%>">                          
+                            </input>
+                            <span class="add-on">秒</span>
+                          </div>
+                      </div>
+                    </div>
+                    
+                    <div class="control-group">
+                          <label class="control-label" for="adClickProb">点击概率</label>
+                          <div class="controls">
+                          <div class="input-append">
+                           <input type="text" id="adClickProb" name="adClickProb" class="input-mini" placeholder="值为0~100间的数字" value="<%=deliver.adClickProb?deliver.adClickProb*100:0%>">                          
+                            </input>
+                            <span class="add-on">%</span>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="trackUrl">CNZZ监控</label>
+                      <div class="controls">
+                        <input type="text" id="trackUrl" name="trackUrl" placeholder="CNZZ监控地址" value="<%=deliver.trackUrl||''%>"></input>
+                      </div>
+                    </div>
+                </div>                
+             </div>
+              <div class="control-group">
+                    <div class="controls">
+                    <input type="submit" class="btn btn-success btn-medium" value="更新广告"/>
+                    </div>
+              </div>
+          </form>
+          <%}%>
+        </div>
+      </div>
+      <%include ../script%>
+      <script type="text/javascript" >
+        seajs.use(['/js/validate'],function  (validate) {          
+          validate.validateAd('edit');
+        });
+      </script>
+      <%include ../footer%>
+ </body>
+ </html>

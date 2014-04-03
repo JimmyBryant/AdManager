@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title><%=widgetName%>的操作日志--Instreet</title>	
+	<% include ../head%>
+	<link rel="stylesheet" type="text/css" href="/css/datepicker.css">	
+</head>
+<body>
+	<% include ../header%>
+	<div id="container">
+		<div class="container"> 
+			<div class="site-search-box">
+				<form action="/log/widget">		
+					<input type="hidden" name="f" value="<%=field%>"/>						
+					<input type="hidden" name="sn" value="<%=siteName%>"/>
+					<input type="hidden" name="wn" value="<%=widgetName%>"/>
+					<span class="s-ml">筛选日期:</span>
+					<span class="input-daterange">
+						<input id="sDate" name="sDate" class="input-text span2" maxlength="10" type="text" value="<%=sDate%>">
+				  		<span>至</span>
+						<input id="eDate" name="eDate" class="input-text span2" maxlength="10" type="text" value="<%=eDate%>">
+					</span>
+			  		<input type="submit" class="btn submit" value="查询"/>
+				</form>
+			</div>
+			<div class="widget-top-info">
+				<h4>
+					<span>网站:</span><a href="/site/details?field=<%=siteField%>"><%=siteName%></a>					
+					<span class="s-ml">插件:</span><span><%=widgetName%></span>
+					
+				</h4>
+			</div>
+			<dl class="log-block">
+			<%var date,dateStr,tmpDate,tmpAuthor; list.forEach(function(val,index){
+				date = new Date(val.timestamp);
+				dateStr = date.toLocaleDateString() + date.toLocaleTimeString();
+				logObj = val;
+			%>
+				<%if(dateStr != tmpDate||logObj.author != tmpAuthor){
+				tmpDate = dateStr;tmpAuthor = logObj.author;%>
+				<dt>
+					<span class="muted"><%=tmpAuthor%></span>					
+					修改了插件
+					<span class="muted n-mlr">
+						<%=date.getFullYear()%>-<%=date.getMonth()+1%>-<%=date.getDate()%>
+						<%=date.toLocaleTimeString()%>
+					</span> 
+				</dt>
+				<%}
+				 if(logObj.type == 'update'){
+				%>
+					<dd>
+						<span><%=logObj.column%></span>
+						由
+						<span>“<%=logObj.oldValue||"空值"%>”</span>
+						修改为
+						<span>“<%=logObj.newValue%>”</span>
+					</dd>
+				<%
+				}%>
+			<%})%>
+			</dl>
+			<% include ../page%>
+		</div>
+	</div>
+	<% include ../script %>
+	<script type="text/javascript">
+		seajs.use('/js/main',function(main){
+			main.bindLogEvents();
+		})
+	</script>	
+	<% include ../footer %>
+</body>
+</html>
+
+

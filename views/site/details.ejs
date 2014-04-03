@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>编辑网站信息--Instreet</title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+        <div class="container">
+          <div id="site-info-wrap">
+            <%if(site){%>
+              <h4 class="edit-form-top">
+                <img class="site-logo" src="<%=site.logoUrl%>"/>
+                <%=site.siteName%>
+                <a href="http://<%=site.domain%>" target="_blank"><%=site.domain%></a>                
+                <%if(site.isAlive == true){%>
+                  <span class="label label-success">已激活</span>
+                <%}else{%>
+                  <span class="label">未激活</span>
+                <%}%>
+                <%if(user.isAdmin){%>
+                <a class="btn btn-small btn-primary" href="/site/edit?field=<%=site.field%>">修改</a>
+                <button type="button" field="<%=site.field%>" class="btn btn-small btn-danger site-delete">删除</button>
+                <%}%>
+              </h4>
+              <%if(site.widgetList.length==0&&user.isAdmin){%>
+              <p>
+                  还没有创建任何广告插进,这就去
+                  <a href="/widget/create?siteField=<%=site.field%>&siteName=<%=site.siteName%>" class="btn btn-info">创建插件</a>
+              </p>              
+              <%}else{                
+                var popupWL = [],permanentWL = [],coupletWL = [];
+                for(var i = 0,len = site.widgetList.length;i<len;i++){
+                  var w = JSON.parse(site.widgetList[i]);
+                  if(w.widgetType == 1){
+                    popupWL.push(w);
+                  }else if(w.widgetType == 2){
+                    permanentWL.push(w);
+                  }else if(w.widgetType == 3){
+                    coupletWL.push(w);
+                  }
+                }
+              %>               
+              <dl class="accordion-group popup-widget-group">
+                <dt class="accordion-heading"><label>弹窗广告插件</label></dt>
+                <dd class="accordion-inner">
+                    <%for(var i=0,len=popupWL.length;i<len;i++){ var w = popupWL[i];%>
+                      <div class="widget-item  <%if(w.isAlive==true){%>widget-active<%}%>">                        
+                        <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
+                        <div>
+                          类型:<span><%=w.adType.toUpperCase()%></span>
+                        </div>                        
+                        <div>
+                          尺寸:<span><%=w.width%>x<%=w.height%></span>
+                        </div> 
+                        <p class="action-group">
+                          <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
+                         <%if(user.isAdmin){%>
+                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
+                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                          <%}%>
+                        </p>  
+                        <div class="widget-hidden-action">
+                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                        </div>                                                    
+                      </div>
+                    <%}%>
+                </dd>
+              </dl> 
+              <dl class="accordion-group permanent-widget-group">
+                <dt class="accordion-heading"><label>固定位广告插件</label></dt>
+                <dd class="accordion-inner">
+                    <%for(var i=0,len=permanentWL.length;i<len;i++){ var w = permanentWL[i];%>
+                      <div class="widget-item <%if(w.isAlive==true){%>widget-active<%}%>">
+                        <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
+                        <div>
+                          类型:<span><%=w.adType.toUpperCase()%></span>
+                        </div>                           
+                        <div>
+                          尺寸:<span><%=w.width%>x<%=w.height%></span>
+                        </div> 
+                        <p class="action-group">
+                          <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
+                          <%if(user.isAdmin){%>
+                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
+                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                          <%}%>
+                        </p> 
+                        <div class="widget-hidden-action">
+                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                        </div>                                                     
+                      </div>
+                    <%}%>
+                </dd>
+              </dl>
+              <dl class="accordion-group couplet-widget-group">
+                <dt class="accordion-heading"><label>对联广告插件</label></dt>
+                <dd class="accordion-inner">
+                    <%for(var i=0,len=coupletWL.length;i<len;i++){ var w = coupletWL[i];%>
+                      <div class="widget-item <%if(w.isAlive==true){%>widget-active<%}%>">
+                        <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
+                        <div>
+                          类型:<span><%=w.adType.toUpperCase()%></span>
+                        </div>                           
+                        <div>
+                          尺寸:<span><%=w.width%>x<%=w.height%></span>
+                        </div> 
+                        <p class="action-group">
+                          <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
+                          <%if(user.isAdmin){%>
+                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
+                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                          <%}%>
+                        </p> 
+                        <div class="widget-hidden-action">
+                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                        </div>                                                     
+                      </div>
+                    <%}%>
+                </dd>
+              </dl> 
+              <%if(user.isAdmin){%>
+              <p>
+                <a href="/widget/create?siteField=<%=site.field%>&siteName=<%=site.siteName%>" class="btn btn-info">创建插件</a>                
+              </p>
+              <%}
+              }
+            }%>          
+          </div>
+        </div>
+      </div>
+      <div id="widget-code-modal" class="modal hide fade">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>china daily</h3>
+          </div>
+          <div class="modal-body">
+            <textarea id="copy-text"  readonly="readonly" rows="10" style="width:510px;">
+
+            </textarea>
+            <!-- <iframe src="" frameborder="0" scrolling="no" marginHeight="0" marginWidth="0" width="100%"></iframe> -->
+          </div>
+          <div class="modal-footer">
+              <a href="javascript:;" class="btn" id="widget-code-copy" data-toggle="tooltip" data-original-title="复制到剪贴板">
+                复制代码
+              </a>
+          </div>
+      </div>      
+      
+      <%include ../script%>
+      <script type="text/javascript">
+        seajs.use('/js/main',function(main){
+          main.bindWidgetEvents();
+        });
+      </script>
+      <%include ../footer%>
+ </body>
+ </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title></title>
+    <%include ../head%>
+  </head>
+  <body>
+    <%include ../header%>
+    <div id="container">
+      <div  class="container">
+              <dl class="user-sign-box">              
+                  <dt><strong>用户登录</strong></dt>
+                  <dd>
+                  <form method="post" action="/signin" class="form-horizontal required-form">
+                     <!-- alert message -->
+                     <div class="alert">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong></strong><span class="mes"></span>
+                     </div>
+                      <div class="control-group">
+                        <label  class="control-label" for="inputEmail">邮箱</label>
+                        <div class="controls">                            
+                            <input type="text" id="inputEmail" name="email" placeholder="Email"  class="required email">
+                        </div>
+                      </div>
+
+                      <div class="control-group">
+                        <label class="control-label" for="inputPassword">密码</label>
+                        <div class="controls">
+                          <input type="password" id="inputPassword" name="password" placeholder="Password" class="required">
+                        </div>
+                      </div>
+
+                      <div class="control-group">
+                        <div class="controls">
+                          <label class="checkbox">
+                            <input type="checkbox" id="rememberMe" name="remember" checked> Remember me
+                          </label>
+                          <button type="submit" id="login-button"  class="btn btn-success btn-medium">登录</button>
+                        </div>
+                      </div>
+
+                  </form>
+                </dd>
+              </dl>    
+      </div>
+      </div>
+    <%include ../script%>
+    <script type="text/javascript">
+      seajs.use("/js/validate",function  (validate) {
+        validate&&validate.validateSignin();
+      });
+     </script>
+    <%include ../footer%>
+  </body>
+</html>

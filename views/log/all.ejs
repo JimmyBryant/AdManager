@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>查看日志--Instreet</title>	
+	<% include ../head%>
+	<link rel="stylesheet" type="text/css" href="/css/datepicker.css">	
+</head>
+<body>
+	<% include ../header%>
+	<div id="container">
+		<div class="container">
+			<div class="site-search-box">
+				<form action="/log/all">
+					
+					<span>网站域名:</span>
+					<input type="text" name="domain" class="input-text" value="<%=domain%>"></input>	
+					<span class="s-ml">筛选日期:</span>
+					<span class="input-daterange">
+						<input id="sDate" name="sDate" class="input-text span2" maxlength="10" type="text" value="<%=sDate%>">
+				  		<span>至</span>
+						<input id="eDate" name="eDate" class="input-text span2" maxlength="10" type="text" value="<%=eDate%>">
+					</span>
+			  		<input type="submit" class="btn submit" value="查询"/>		  		
+				</form>
+			</div>
+			<table class="table table-bordered table-striped">
+		              <thead>
+					<tr>
+					  <td>编号</td>
+					  <td>网站</td>
+					  <td>插件ID</td>			  
+					  <td>操作</td>
+					  <td>操作列</td>
+					  <td>原始值</td>
+					  <td>更新值</td>					  									  
+					  <td>时间</td>					  
+					</tr>
+		              </thead> 
+		              <tbody>
+					<%var date = new Date();%>		              	
+		              		<% list.forEach(function(val,index){ var logObj = val;date.setTime (logObj.timestamp);%>
+		              		<tr>
+		              			<td><%=(pager.curPage-1)*pager.pageSize+index+1%></td>
+		              			<td>
+		              				<a href="/site/details?field=<%=logObj.siteField%>" target="_blank">
+		              					<%=logObj.siteName%>
+		              				</a>
+		              				<div><%=logObj.domain%></div>
+		              			</td>
+		              			<td>
+		              				<div>
+		              					<%=logObj.widgetField%>
+		              				</div>
+		              			</td>	              	
+		              			<td>
+		              				<span class="label <% if(logObj.type=='delete') {%>label-important<%}else{%>label-info<%}%>"><%=logObj.type%></span>
+		              			</td>
+		              			<td><%=logObj.column%></td>
+		              			<td><span><%=logObj.oldValue%></span></td>
+		              			<td>
+		              				<span><%=logObj.newValue%></span>
+		              			</td>		              			
+		             			<td>		             				
+		             				<div>
+		              				<%=date.getFullYear()%>-<%=date.getMonth()+1%>-<%=date.getDate()%> 
+		              				<%=date.toLocaleTimeString()%>
+		              				</div>
+		              				<span class="muted"><%=logObj.author%></span>
+		              			</td>	
+	
+		              		</tr>
+		              		<%});%>		              		
+		              </tbody>
+			</table>
+			<% include ../page%>
+		</div>
+	</div>
+	<% include ../script %>
+	<script type="text/javascript">
+		seajs.use('/js/main',function(main){
+			main.bindLogEvents();
+		})
+	</script>	
+	<% include ../footer %>
+</body>
+</html>
+
+

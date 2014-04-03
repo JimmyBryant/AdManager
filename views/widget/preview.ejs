@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title> widget preview--Instreet</title>	
+	<% include ../head%>	
+</head>
+<body>
+<div>
+<h1><%=widgetName||''%>——广告预览</h1>
+<%if(widgetType == 1){%>
+<!--弹窗广告代码-->
+<div id="ins-popup-<%=(field||"")%>">
+<script type="text/javascript">
+	instreet_widgetSid="<%=(field||"")%>";
+</script>
+<script type="text/javascript" src="<%=config.popupUrl%>" charset="utf-8"></script>
+</div>
+<%}else if(widgetType == 2){%>
+<!--固定位广告代码-->
+<script type="text/javascript" id="<%=(field||"")%>">
+	instreet_widgetSid="<%=(field||"")%>";
+</script>
+<script type="text/javascript" src="<%=config.permanentUrl%>" charset="utf-8"></script>
+<%}else if(widgetType == 3){%>
+<script type="text/javascript">
+	instreet_widgetSid="<%=(field||"")%>";
+</script>
+<script type="text/javascript" src="<%=config.coupletUrl%>" charset="utf-8">
+</script>
+<%}%>
+</div>
+</body>
+</html>

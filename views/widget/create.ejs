@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>创建插件--Instreet</title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+        <div class="container">
+          <form method="<%=widgetType?'post':'get'%>" action="/widget/create" id="widget-data-form"  class="form-horizontal required-form">
+            <%if(siteField&&siteName){%>
+             <!-- alert message -->
+             <div class="alert" >
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Error:</strong><span class="mes"></span>
+             </div>
+             <input type="hidden" name="siteField" value="<%=siteField%>"></input>              
+              <input type="hidden" name="siteName" value="<%=siteName%>"></input>
+              <div class="widget-top-info">
+                <h4>
+                  <span>网站:</span><a href="/site/details?field=<%=siteField%>"><%=siteName%> </a>    
+                </h4>
+                <div class="widget-progressbar">
+                  <span  class="label label-success step">1. 选择插件类型</span>
+                  >>
+                  <span class="label step <%=widgetType?'label-success':''%>">2.填写插件信息</span>
+                  >>
+                  <span class="label step">3.创建插件成功</span>
+                </div>    
+              </div>
+              <!-- has not choosed widget type -->
+              <%if(!widgetType||widgetType>3){%>  
+                  <div class="control-group">
+                    <label class="control-label">选择插件类型:</label>
+                    <div class="controls">
+                        <label class="label-radio"><input type="radio" name="widgetType" value="1" checked>弹窗广告插件</input></label>
+                        <label class="label-radio"><input type="radio" name="widgetType" value="2">固定位广告插件</input></label>
+                        <label class="label-radio"><input type="radio" name="widgetType" value="3">对联广告插件</input></label>  
+                    </div>
+                  </div> 
+                  <div class="control-group">             
+                    <div class="controls">
+                      <input type="submit" class="btn btn-success" value="下一步"></input>
+                    </div>
+                </div>
+              <%}else{%>                
+                <div class="control-group">
+                  <label class="control-label">  插件类型</label>
+                  <div class="controls">
+                    <strong>
+                      <%=widgetType==1?'弹窗广告':widgetType==2?'固定位广告':'对联广告'%>
+                    </strong>
+                    <a href="/widget/create?siteField=<%=siteField%>&siteName=<%=siteName%>">修改</a>
+                    <input type="hidden" name="widgetType" value="<%=widgetType%>"/>
+                  </div>
+                </div>
+              <%include create_ad%>
+              <div class="control-group">
+                <div class="controls">
+                  <input type="submit" class="btn btn-success" value="创建插件"></input>
+                </div>
+              </div>
+                  <%}
+             }%>
+          </form>
+        </div>
+      </div>
+      <%include ../script%>
+      <script type="text/javascript" >        
+        seajs.use(['/js/validate','/js/main'],function  (validate,main) {          
+          var easyform = validate.validateWidget();
+          main.bindAdEvents(easyform);
+        });
+      </script>
+      <%include ../footer%>
+ </body>
+ </html>

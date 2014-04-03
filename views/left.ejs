@@ -1,0 +1,8 @@
+
+<ul id="user-manager">
+	<%if(user.isAdmin){%>
+	<li><a href="/admin/index"><span>所有用户  </span></a></li>
+	<li><a href="/admin/addUser"><span>新建用户  </span></a></li>
+	<%}%>
+	<li><a href="/user/changePassword"><span>修改密码</span></a></li>
+</ul>  

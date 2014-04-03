@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>welcome,<%=user.email%></title>
+    <%include ../head%>
+  </head>
+  <body>
+      <%include ../header%>
+      <div id="container">
+          <div class="main-left">            
+            <% include ../left%>
+          </div>
+          <div class="main-right">
+            <h3>hello,<%=user.email%></h3>
+          </div>
+
+      </div>
+      <%include ../script%>
+      <script type="text/javascript" >
+        seajs.use('/js/active',function  (a) {
+          a.activeNav();
+        });
+      </script>
+      <%include ../footer%>
+ </body>
+ </html>

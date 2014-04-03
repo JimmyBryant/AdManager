@@ -1,0 +1,22 @@
+<div id="nav-global" class="navbar">
+<div class="container">
+	<a href="/" title="Instreet" id="logo" class="brand">Instreet </a>
+	<% if(typeof user!='undefined'){ %>
+	<ul class="nav">
+		<li><a href="/" title="">首页</a></li>
+		<%if(user.isAdmin){%>
+		<li><a href="/site/create" title="">新建网站</a></li>
+		<li><a href="/log/all" title="">操作日志</a></li>
+		<%}%>
+	</ul>
+	<div class="sign-action-group">
+		<a href="#" class="user-email"><span><%=user.email%></span></a>
+		<!--<a href="/user/signout" title="退出">退出</a>-->
+	</div>
+	<%}else{%>
+	<div class="sign-action-group">
+		<a href="/user/signin" title="登录">登录</a>	
+	</div>
+	<%}%>
+</div>
+</div>
