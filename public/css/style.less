@@ -31,6 +31,7 @@
 @BackColor:#FFF;
 @warningColor:#FFE9AD;
 @successColor:#468847;
+@darkSuccessColor:#016601;
 @greyColor:#999999;
 
 body{
@@ -179,7 +180,7 @@ a:hover{
 }
 
 /***accordion-group****/
-.popup-widget-group,.permanent-widget-group,.couplet-widget-group{
+.popup-widget-group,.permanent-widget-group,.couplet-widget-group,.banner-widget-group{
 	margin-bottom:@M;
 }
 .accordion-heading{
@@ -226,28 +227,49 @@ a:hover{
 .accordion-inner .widget-item .action-group a{
 	display:inline-block;
 	color:#FFF;	
-	margin-right:@N;
+	padding:0 @N;
+}
+.accordion-inner .widget-item .action-group>a:hover{
+  background: @darkSuccessColor;
+  text-decoration: none;
+}
+.accordion-inner .widget-item .action-group>a.clicked{
+  background: @darkSuccessColor;
 }
 .accordion-inner .widget-item .action-group .widget-code{
-	float:left;
-	margin-left:@N;	
+	float:left;	
 }
 .accordion-inner .widget-item .widget-hidden-action{
-	position: absolute;
-	background-color:#000;
-	width: 100%;
-	height: 0;
-	top: 0;
-	left:0;
-	text-align:right;
-	overflow:hidden;
+  display: none;
+  background-color: @darkSuccessColor;
+  position: absolute;
+  top: 26px;
+  right: -1px;
+  text-align: right;
+  overflow: hidden;
+  z-index: 999;
+}
+ul.widget-hidden-action li{
+  border-bottom: 1px solid @successColor;
+  margin: 0;
+  width: 77px;
+  text-align: center;
+}
+ul.widget-hidden-action li:last-child{
+  border-bottom: none;
+}
+ul.widget-hidden-action li a:hover{
+  background-color: #222;
+  text-decoration: none;
 }
 .widget-hidden-action .action-left{
 	float:left;
 }
 .accordion-inner .widget-item .widget-hidden-action a{
-	color:#FFF;
-	padding: 0 @N;
+  display: block;
+  color: #FFF;
+  padding: 3px 0;
+  margin: 0;
 }
 /*******end******/
 #footer{
@@ -288,6 +310,10 @@ a:hover{
 	background: @backColor;
 	padding: @M 0 0;
 	border: 1px solid @borderColor;
+}
+.setting-box .text-warning{
+	font-size:12px;
+	margin:0 5px;
 }
 .edit-form-top{
 	border-bottom:1px solid @BorderColor;

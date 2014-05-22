@@ -24,6 +24,7 @@ function generateWidget(params,type){
           slot : params.slot,
           dfpID : params.dfpID,
           dfpName : params.dfpName,
+          widgetStyle : params.widgetStyle||1,
           closePosition : params.closePosition||'',
           showLogo : parseInt(params.showLogo),
           showReplay : parseInt(params.showReplay),
@@ -65,6 +66,14 @@ function generateWidget(params,type){
           slot2 : params.slot2 || '',
           closePosition : params.closePosition || ''
         }
+     }else if(wt == 4){
+       w={
+          width : width,
+          height : height,
+          pubID : params.pubID,
+          slot : params.slot,
+          bgColor : params.bgColor || '#1a1a1a'
+       }
      }
      if(type == 'create'){
       w.siteField = params.siteField;
@@ -77,8 +86,12 @@ function generateWidget(params,type){
      w.isAlive = params.isAlive;
      w.widgetName = params.widgetName;     
      w.adType = at;
-     w.adClickProb = (params.adClickProb||0)/100;
-     w.trackUrl =  params.trackUrl;  
+     if(wt!=4){
+       w.adClickProb = (params.adClickProb||0)/100;
+       w.trackUrl =  params.trackUrl;
+       w.fdfpID = typeof params.fdfpID!='undefined'?params.fdfpID.trim():'';
+       w.fdfpName = typeof params.fdfpName!='undefined'?params.fdfpName.trim():''; 
+     }
      return w;
 };
 
@@ -97,7 +110,7 @@ var widget = {
               widgetType = params.widgetType,
               widgetName = params.widgetName;
               params.sid = sid;
-          if(widgetType>3||widgetType<1){
+          if(widgetType>4||widgetType<1){
             res.render('widget/create',{err : '插件类型错误',siteField : siteField,siteName : siteName,widgetType : widgetType});  
           }else if(!siteField || !siteName){
             res.render('widget/create',{err : '必须选择一个网站',siteField : siteField,siteName : siteName,widgetType : widgetType});

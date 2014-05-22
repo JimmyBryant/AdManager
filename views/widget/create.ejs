@@ -31,13 +31,14 @@
                 </div>    
               </div>
               <!-- has not choosed widget type -->
-              <%if(!widgetType||widgetType>3){%>  
+              <%if(!widgetType||widgetType>4){%>  
                   <div class="control-group">
                     <label class="control-label">选择插件类型:</label>
                     <div class="controls">
                         <label class="label-radio"><input type="radio" name="widgetType" value="1" checked>弹窗广告插件</input></label>
                         <label class="label-radio"><input type="radio" name="widgetType" value="2">固定位广告插件</input></label>
-                        <label class="label-radio"><input type="radio" name="widgetType" value="3">对联广告插件</input></label>  
+                        <label class="label-radio"><input type="radio" name="widgetType" value="3">对联广告插件</input></label> 
+                        <label class="label-radio"><input type="radio" name="widgetType" value="4">横幅广告插件</input></label>  
                     </div>
                   </div> 
                   <div class="control-group">             
@@ -50,7 +51,7 @@
                   <label class="control-label">  插件类型</label>
                   <div class="controls">
                     <strong>
-                      <%=widgetType==1?'弹窗广告':widgetType==2?'固定位广告':'对联广告'%>
+                      <%=widgetType==1?'弹窗广告':widgetType==2?'固定位广告':widgetType==3?'对联广告':'横幅广告'%>
                     </strong>
                     <a href="/widget/create?siteField=<%=siteField%>&siteName=<%=siteName%>">修改</a>
                     <input type="hidden" name="widgetType" value="<%=widgetType%>"/>

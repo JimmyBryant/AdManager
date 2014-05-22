@@ -297,12 +297,29 @@ define(function  (require,exports,module) {
 					textarea.text(data);		
 					$('#widget-code-modal').modal('show');			
 				})				
-			});			
-			$('.widget-item').hover(function(){			
-				$(this).find('.widget-hidden-action').stop().animate({height : '22px'});
-			},function(){
-				$(this).find('.widget-hidden-action').stop().animate({height : 0});
 			});
+			$('.widget-more-action').on('click',function(e){
+				var $btn = $(this);
+				if($btn.hasClass('clicked')){
+					$btn.removeClass('clicked');
+					$btn.next().hide();
+				}else{
+					$btn.addClass('clicked');
+					$btn.next().show();
+				}
+			});
+			$(document).on('click',function(e){
+				var tar = e.target
+					,$tar = $(tar)
+					;
+				var isBtn = $tar.hasClass('clicked');				
+				$('.widget-more-action').removeClass('clicked');
+				$('.widget-hidden-action').hide();
+				if(isBtn){
+					$tar.addClass('clicked');
+					$tar.next().show();
+				}
+			});			
 		},
 		bindLogEvents : function(){
 			require('datepicker');

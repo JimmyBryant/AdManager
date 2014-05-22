@@ -11,11 +11,13 @@
                   <div class="controls">
                     <select id="adType" name="adType" >
                         <option value="adsense">Adsense</option>
-                        <%if(widgetType!=3){%>
+                        <%if(widgetType==1||widgetType==2){%>
                         <option value="afv">AFV</option>
                         <%}%>
-                        <option value="dfp">DFP</option>                        
+                        <%if(widgetType!=4){%>
+                        <option value="dfp">DFP</option>                                  
                         <option value="baidu">Baidu</option>
+                        <%}%>  
                         <%if(widgetType==2){%>
                         <option value="banner">Banner</option>
                         <%}%>
@@ -51,7 +53,7 @@
                     <select id="adSize" name="adSize" >
                         <%var adsize = widgetType==1?['300x250','336x280']:widgetType==2?['300x250','336x280','728x90','160x600','120x600','120x240','320x50',
                                         '970x90','468x60','234x60','300x600','250x250','200x200','125x125','728x15',
-                                        '468x15','200x90','180x90','160x90','120x90']:['120x240','100x300','120x600'];
+                                        '468x15','200x90','180x90','160x90','120x90']:widgetType==3?['120x240','100x300','120x600']:['970x90','728x90'];
                           for(var i=0,len=adsize.length;i<len;i++){
                                    
                         %>
@@ -225,7 +227,7 @@
                         </select>
                     </div>
               </div>
-
+             <%if(widgetType!=4){%> 
              <div id="ad-setting">
                <div class="control-group">
                   <div class="controls">
@@ -302,8 +304,8 @@
                       <label class="control-label" for="showClose">显示关闭按钮</label>
                       <div class="controls">
                         <select id="showClose" name="showClose">
-                          <option value="1">是</option>
                           <option value="0">否</option>
+                          <option value="1">是</option>                      
                         </select>
                       </div>
                     </div>
@@ -329,3 +331,4 @@
                     
                   </div>
               </div>
+              <%}%>

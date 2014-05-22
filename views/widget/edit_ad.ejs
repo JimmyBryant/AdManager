@@ -20,6 +20,9 @@
                           if(p == 'afv'&&widget.widgetType == 3){
                             continue;
                           }
+                          if(p != 'adsense'&&widget.widgetType == 4){
+                            continue;
+                          }
                         %>
                         <option value="<%=p%>" <%if(widget.adType == p){%> selected <%}%>><%=wt[p]%></option>
                         <%}%>
@@ -61,7 +64,7 @@
                     <select id="adSize" name="adSize" >
                         <%var adsize = widget.widgetType==1?['300x250','336x280']:widget.widgetType==2?['300x250','336x280','728x90','160x600','120x600','120x240','320x50',
                                         '970x90','468x60','234x60','300x600','250x250','200x200','125x125','728x15',
-                                        '468x15','200x90','180x90','160x90','120x90']:['120x240','100x300','120x600'];
+                                        '468x15','200x90','180x90','160x90','120x90']:widget.widgetType==3?['120x240','100x300','120x600']:['970x90','728x90'];
                           var notCustom = adsize.some(function(val){
                                   if(val==widget.width+'x'+widget.height){
                                     return true;
@@ -229,7 +232,22 @@
              </div>
 
              <%}%>
-
+              <!-- popup style-->
+              <%if(widget.widgetType==1){%>
+              <div class="control-group">
+                    <label class="control-label" for="widgetStyle">弹窗样式</label>
+                    <div class="controls">
+                    <label class="label-radio">
+                      <input type="radio" name="widgetStyle" value="1" <%if(!widget.widgetStyle||widget.widgetStyle==1){%>checked<%}%>/>
+                      默认样式
+                    </label>
+                    <label class="label-radio">
+                      <input type="radio" name="widgetStyle" value="2" <%if(widget.widgetStyle==2){%>checked<%}%>/>
+                      百度样式
+                    </label>
+                    </div>
+              </div>
+              <%}%>
               <!-- isAlive-->
               <div class="control-group">
                     <label class="control-label" for="isAlive"> 激活插件</label>
@@ -240,7 +258,7 @@
                         </select>
                     </div>
               </div>
-
+            <%if(widget.widgetType!=4){%> 
              <div id="ad-setting">
                <div class="control-group">
                   <div class="controls">
@@ -339,5 +357,15 @@
                       </div>
                     </div>
                     
+                    <div class="control-group">
+                      <label class="control-label" for="fdfpID">地域屏蔽</label>
+                      <div class="controls">
+                        <input type="text" class="input-small" id="fdfpID" name="fdfpID" placeholder="DFP ID" value="<%=typeof widget.fdfpID=='undefined'?'':widget.fdfpID%>"></input>
+                        <input type="text" class="input-small" id="fdfpName" name="fdfpName" placeholder="DFP Name" value="<%=typeof widget.fdfpName=='undefined'?'':widget.fdfpName%>"></input>
+                        <span class="text-warning">使用DFP进行地域屏蔽</span>
+                      </div>
+                    </div>
+
                   </div>
                </div>
+               <%}%>

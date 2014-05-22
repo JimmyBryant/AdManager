@@ -31,7 +31,7 @@
                   <a href="/widget/create?siteField=<%=site.field%>&siteName=<%=site.siteName%>" class="btn btn-info">创建插件</a>
               </p>              
               <%}else{                
-                var popupWL = [],permanentWL = [],coupletWL = [];
+                var popupWL = [],permanentWL = [],coupletWL = [],bannerWL = [];
                 for(var i = 0,len = site.widgetList.length;i<len;i++){
                   var w = JSON.parse(site.widgetList[i]);
                   if(w.widgetType == 1){
@@ -40,6 +40,8 @@
                     permanentWL.push(w);
                   }else if(w.widgetType == 3){
                     coupletWL.push(w);
+                  }else if(w.widgetType == 4){
+                    bannerWL.push(w);
                   }
                 }
               %>               
@@ -51,21 +53,29 @@
                         <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
                         <div>
                           类型:<span><%=w.adType.toUpperCase()%></span>
+                          <%if(w.fdfpID&&w.fdfpName){%>
+                            <span class="label label-info">地域屏蔽</span>
+                          <%}%>
                         </div>                        
                         <div>
                           尺寸:<span><%=w.width%>x<%=w.height%></span>
                         </div> 
-                        <p class="action-group">
+                        <div class="action-group">
                           <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
                          <%if(user.isAdmin){%>
-                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
-                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                          <a href="javascript:;" class="widget-more-action">更多操作</a>
+                          <ul class="widget-hidden-action">
+                            <li>
+                              <a href="/widget/edit?field=<%=w.field%>" title="">修改</a>
+                            </li>
+                            <li><a target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a></li>
+                            <li>
+                            <a target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                            </li>
+                            <li><a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a></li>
+                          </ul> 
                           <%}%>
-                        </p>  
-                        <div class="widget-hidden-action">
-                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
-                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
-                        </div>                                                    
+                        </div>                                                     
                       </div>
                     <%}%>
                 </dd>
@@ -78,20 +88,32 @@
                         <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
                         <div>
                           类型:<span><%=w.adType.toUpperCase()%></span>
+                          <%if(w.fdfpID&&w.fdfpName){%>
+                            <span class="label label-info">地域屏蔽</span>
+                          <%}%>                          
                         </div>                           
                         <div>
                           尺寸:<span><%=w.width%>x<%=w.height%></span>
                         </div> 
-                        <p class="action-group">
+                        <div class="action-group">
                           <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
                           <%if(user.isAdmin){%>
-                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
-                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                            <a href="javascript:;" class="widget-more-action">更多操作</a>
+                            <ul class="widget-hidden-action">
+                              <li>
+                                <a href="/widget/edit?field=<%=w.field%>" title="">修改</a>
+                              </li>
+                              <li>
+                                <a  target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                              </li>
+                              <li>
+                                <a  target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                              </li>
+                              <li>
+                                <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                              </li>
+                            </ul> 
                           <%}%>
-                        </p> 
-                        <div class="widget-hidden-action">
-                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
-                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
                         </div>                                                     
                       </div>
                     <%}%>
@@ -105,25 +127,73 @@
                         <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
                         <div>
                           类型:<span><%=w.adType.toUpperCase()%></span>
+                          <%if(w.fdfpID&&w.fdfpName){%>
+                            <span class="label label-info">地域屏蔽</span>
+                          <%}%>                          
                         </div>                           
                         <div>
                           尺寸:<span><%=w.width%>x<%=w.height%></span>
                         </div> 
-                        <p class="action-group">
+                        <div class="action-group">
                           <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
                           <%if(user.isAdmin){%>
-                          <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
-                          <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                            <a href="javascript:;" class="widget-more-action">更多操作</a>
+                            <ul class="widget-hidden-action">
+                              <li>
+                                <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
+                              </li>
+                              <li>
+                                <a target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                              </li>
+                              <li>
+                                <a target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                              </li>
+                              <li>
+                                <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                              </li>
+                            </ul> 
                           <%}%>
-                        </p> 
-                        <div class="widget-hidden-action">
-                          <a class="action-left" target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
-                          <a class="action-right" target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
                         </div>                                                     
                       </div>
                     <%}%>
                 </dd>
-              </dl> 
+              </dl>
+              <dl class="accordion-group banner-widget-group">
+                <dt class="accordion-heading"><label>横幅广告插件</label></dt>
+                <dd class="accordion-inner">
+                    <%for(var i=0,len=bannerWL.length;i<len;i++){ var w = bannerWL[i];%>
+                      <div class="widget-item <%if(w.isAlive==true){%>widget-active<%}%>">
+                        <h5 title="<%=w.widgetName%>"><%=w.widgetName%></h5> 
+                        <div>
+                          类型:<span><%=w.adType.toUpperCase()%></span>
+                        </div>        
+                        <div>
+                          尺寸:<span><%=w.width%>x<%=w.height%></span>
+                        </div> 
+                        <div class="action-group">
+                          <a href="javascript:;" class="widget-code" data-field="<%=w.field%>" data-type="<%=w.widgetType%>">获取代码</a>
+                          <%if(user.isAdmin){%>
+                            <a href="javascript:;" class="widget-more-action">更多操作</a>
+                            <ul class="widget-hidden-action">
+                              <li>
+                                <a href="/widget/edit?field=<%=w.field%>" title="">修改 </a>
+                              </li>
+                              <li>
+                                <a target="_blank" href="/widget/preview?field=<%=w.field%>&widgetType=<%=w.widgetType%>&widgetName=<%=w.widgetName%>">预览</a>
+                              </li>
+                              <li>
+                                <a target="_blank" href="/log/widget?sn=<%=site.siteName%>&sf=<%=site.field%>&wn=<%=w.widgetName%>&f=<%=w.field%>">日志</a>
+                              </li>
+                              <li>
+                                <a href="javascript:;" class="widget-delete" field="<%=w.field%>" title="">删除</a>
+                              </li>
+                            </ul> 
+                          <%}%>
+                        </div>                                                     
+                      </div>
+                    <%}%>
+                </dd>
+              </dl>  
               <%if(user.isAdmin){%>
               <p>
                 <a href="/widget/create?siteField=<%=site.field%>&siteName=<%=site.siteName%>" class="btn btn-info">创建插件</a>                

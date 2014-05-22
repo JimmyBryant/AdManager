@@ -19,6 +19,7 @@ var config={
 	popupUrl:jsUrl + 'instreet.popup.min.js',	
 	permanentUrl : jsUrl + 'instreet.permanent.min.js',
 	coupletUrl : jsUrl + 'instreet.couplet.min.js',
+	bannerUrl : jsUrl + 'instreet.banner.min.js',
 	deliverlog:deliverlog,
 	istclog:istclog,
 	version:version,

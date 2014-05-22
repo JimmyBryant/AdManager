@@ -193,7 +193,7 @@ var widgetManagement = {
 					multi.exec(function(err,replies){
 						if(err){
 							callback({err:err});
-						}else{
+						}else{	
 							callback(replies);
 						}
 					});	

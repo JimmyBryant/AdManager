@@ -18,4 +18,12 @@
 	instreet_widgetSid="<%=(field||"")%>";
 </script>
 <script type="text/javascript" src="<%=config.coupletUrl%>" charset="utf-8"></script>
+<%}else if(widgetType == 4){%>
+<!--横幅广告代码-->
+<div id="ins-banner-<%=(field||"")%>">
+<script type="text/javascript">
+	instreet_widgetSid="<%=(field||"")%>";
+</script>
+<script type="text/javascript" src="<%=config.bannerUrl%>" charset="utf-8"></script>
+</div>
 <%}%>

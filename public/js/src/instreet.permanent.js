@@ -13,8 +13,8 @@
 		,rdnum = Math.random()
 		,isIE = !!window.ActiveXObject;
 
-	var //pushAPI = 'http://popup.instreet.cn:3000/widget/push'
-		pushAPI = 'http://istc.instreet.cn/widget/push'
+	// var pushAPI = 'http://popup.instreet.cn:3000/widget/push'
+	var	pushAPI = 'http://istc.instreet.cn/widget/push'
 		,afvUrl = 'http://s2.yylady.cn/corner/server/gnm.php'
 		,dfpUrl='http://s2.yylady.cn/corner/server/justdoit_dfp.php'
 		,mediavUrl='http://s2.yylady.cn/corner/boilerplate/popup_mediav.html'
